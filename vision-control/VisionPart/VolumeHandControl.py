@@ -6,7 +6,7 @@ import numpy as np
 import HandTrackingModule as htm
 import math
 import alsaaudio
-from SerialCommunication import *
+import serial
 
 # wCam, hCam = 1280, 720
 
@@ -18,7 +18,7 @@ volume = 0
 length = 0
 
 detector = htm.HandDetector(detectionConf=0.9)
-
+arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
 
 # audio stuff
 mixer  = alsaaudio.Mixer()
@@ -62,6 +62,10 @@ while True:
             volume = np.interp(length, [50, 300], [0,100])
             # print(int(volume))
             mixer.setvolume(int(volume))
+            # sending value to arduino
+            arduino.write(bytes(str(int(volume)), 'utf-8'))
+            msg = arduino.read()
+            print(int(volume), msg)
 
             if length < 30:
                 cv2.circle(img, (cx, cy), 10, (0, 255, 0), cv2.FILLED)

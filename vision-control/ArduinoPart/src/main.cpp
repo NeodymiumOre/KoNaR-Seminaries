@@ -17,6 +17,7 @@ void loop()
   if(Serial.available() > 0)
   {
     x = Serial.readString().toInt();
+    //x = Serial.read();
     pwm_val = map(x, 0, 100, 0, 255);
     analogWrite(LED_PIN, pwm_val);
     //Serial.print("Ustawilem PWM na ");
