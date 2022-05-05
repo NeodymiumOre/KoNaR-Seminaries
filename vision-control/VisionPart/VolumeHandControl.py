@@ -6,6 +6,7 @@ import numpy as np
 import HandTrackingModule as htm
 import math
 import alsaaudio
+import serial
 
 # wCam, hCam = 1280, 720
 
