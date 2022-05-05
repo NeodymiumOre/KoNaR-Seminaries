@@ -18,7 +18,7 @@ volume = 0
 length = 0
 
 detector = htm.HandDetector(detectionConf=0.9)
-arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
+# arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
 
 # audio stuff
 mixer  = alsaaudio.Mixer()
@@ -54,25 +54,25 @@ while True:
 
             # calculatin reference length
             ref_len = math.hypot(x4-x1, y4-y1)
-            length = int(length*65/ref_len)
+            length = int(length*100/ref_len)
             print(ref_len, length)
 
-            # Hand range: 50 - 300
+            # Hand range: 50 - 500
             # Volume range 0 - 100
-            volume = np.interp(length, [50, 300], [0,100])
+            volume = np.interp(length, [50, 500], [0,100])
             # print(int(volume))
             mixer.setvolume(int(volume))
             # sending value to arduino
-            arduino.write(bytes(str(int(volume)), 'utf-8'))
-            msg = arduino.read()
-            print(int(volume), msg)
+            # arduino.write(bytes(str(int(volume)), 'utf-8'))
+            # msg = arduino.read()
+            # print(int(volume), msg)
 
             if length < 30:
                 cv2.circle(img, (cx, cy), 10, (0, 255, 0), cv2.FILLED)
 
     cv2.rectangle(img, (40, 150), (85, 400), (255, 255, 255), 2)
     # cv2.rectangle(img, (40, 400 - int(volume*2.5)), (85, 400), (255, 255, 255), cv2.FILLED)
-    volBar = np.interp(length, [50,300], [400, 150])
+    volBar = np.interp(length, [50,500], [400, 150])
     cv2.rectangle(img, (40, int(volBar)), (85, 400), (255, 255, 255), cv2.FILLED)
 
     cv2.putText(img, f"{int(volume)} %", (30, 450), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)

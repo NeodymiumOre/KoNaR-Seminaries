@@ -12,7 +12,7 @@ class HandDetector():
         self.detectionConf = detectionConf
         self.trackConf = trackConf
 
-        # ???
+        # creating hand object
         self.mpHands = mp.solutions.hands
         self.hands = self.mpHands.Hands(self.mode, self.maxHands, 1, self.detectionConf, self.trackConf)
         self.mpDraw = mp.solutions.drawing_utils
