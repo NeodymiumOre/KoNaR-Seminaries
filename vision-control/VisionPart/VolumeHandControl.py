@@ -64,7 +64,7 @@ while True:
             mixer.setvolume(int(volume))
             # sending value to arduino
             # arduino.write(bytes(str(int(volume)), 'utf-8'))
-            # msg = arduino.read()
+            #msg = arduino.read()
             # print(int(volume), msg)
 
             if length < 30:

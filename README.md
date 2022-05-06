@@ -1,1 +1,3 @@
 # Repo for KoNaR seminaries
+
+
